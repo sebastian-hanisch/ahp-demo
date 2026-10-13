@@ -102,3 +102,20 @@ def test_random_index_simulation_has_the_documented_size_and_error():
     assert 0.45 < ri < 0.6 and 0 < se < 0.02
     assert wt.random_index(3, SplitMix64(1), 4000) == (ri, se)           # deterministisch
     assert wt.random_index(5, SplitMix64(1), 2000)[0] > ri               # wächst mit m
+
+
+class _UniformOne:
+    """Zufallsquelle, die an der oberen Kante des Wertebereichs liegt (uniform() = 1,0 statt < 1)."""
+
+    def uniform(self, n):
+        return np.ones(n)
+
+
+def test_random_index_clamps_the_scale_index_at_the_upper_edge():
+    """Liefert die Zufallsquelle genau 1,0, muss der Index auf den letzten Skalenwert (9) begrenzt werden, nicht aus der Skala laufen.
+    Alle Einträge oberhalb der Diagonalen sind dann 9: CI der 3x3-Matrix [[1,9,9],[1/9,1,9],[1/9,1/9,1]] ist gleich für alle Ziehungen (Standardfehler 0)."""
+    ri, se = wt.random_index(3, _UniformOne(), 5)
+    A = np.array([[1.0, 9.0, 9.0], [1 / 9, 1.0, 9.0], [1 / 9, 1 / 9, 1.0]])
+    expected = (np.linalg.eigvals(A).real.max() - 3) / 2
+    assert ri == pytest.approx(expected)
+    assert se == pytest.approx(0.0, abs=1e-12)
