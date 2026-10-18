@@ -368,4 +368,4 @@ def verdict_question(rows: list[dict]) -> tuple[str, str]:
     imp = _row(rows, world="roh", delta=lo, method="wichtigkeit")["hit"]
     sw = _row(rows, world="roh", delta=lo, method="schwenk")["hit"]
     return "warning", (f"Streut das erste Kriterium nur noch zu {de(100 * lo, 0)} %, trifft AHP mit Wichtigkeitsurteilen Platz 1 in {de(100 * imp, 0)} % der Fälle, "
-                       f"mit Schwenkurteilen in {de(100 * sw, 0)} %. Ob AHP bei schmaler Spannweite scheitert, entscheidet die gestellte Frage, nicht das Verfahren.")
+                       f"mit Schwenkurteilen in {de(100 * sw, 0)} %. Ob AHP bei schmaler Spannweite scheitert, entscheidet in der Welt der Rohwerte die gestellte Frage, nicht das Verfahren.")

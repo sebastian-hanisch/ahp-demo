@@ -88,7 +88,7 @@ def verdict(kind_text):
 st.title("⚖️ AHP: Paarvergleiche, Eigenvektor, Konsistenz")
 st.markdown(
     """
-**Der Eigenvektor ist nicht das Problem; die Skala, die Frage und das Konsistenzmaß sind es.** Dies ist das vierte Stück der Linie **Mehrkriterien-Ranking**: Statt Punkte zu
+**Im Urteilsmodell dieser Demo ist nicht die Ableitung (Eigenvektor oder geometrisches Mittel) das Problem, sondern Skala, Frage und Konsistenzmaß.** Dies ist das vierte Stück der Linie **Mehrkriterien-Ranking**: Statt Punkte zu
 vergeben, vergleicht der Entscheider die Kriterien **paarweise** (wie viel wichtiger ist i als j?), und aus der Matrix dieser Urteile werden die Gewichte abgeleitet, entweder
 über den **Eigenvektor** oder das **geometrische Mittel** der Zeilen. Die Demo misst beides an der **Entscheidung**, die die gewichtete Summe damit trifft. Der Entscheider ist
 simuliert, ebenso sein **Urteil**: Rauschen und Rundung sind angenommen, nicht am Menschen gemessen.
@@ -133,7 +133,7 @@ with st.sidebar:
                               "die Frage, ob die Urteile die Spannweite enthalten.")
     st.markdown("**Urteile**")
     sigma = st.selectbox("Rauschen σ der Urteile", C.SIGMA_CHOICES, key="sigma_select", format_func=lambda s: de(s, 1),
-                         help="Streuung des Logarithmus jedes Verhältnisurteils (lognormal). 0: exakte Verhältnisse, nur gerundet; 0,8: ein Verhältnis von 2 wird oft als 1 oder 4 genannt.")
+                         help="Streuung des Logarithmus jedes Verhältnisurteils (lognormal). 0: exakte Verhältnisse, nur gerundet; 0,8: ein Verhältnis von 2 wird oft als 1 (27 %) oder als 4 und mehr (24 %) genannt.")
     jscale = st.selectbox("Urteilsskala", C.JUDGMENT_SCALES, key="jscale_select", format_func=lambda k: C.JUDGMENT_SCALE_LABELS[k],
                           help="Saaty: ganze Zahlen 1 bis 9 und Kehrwerte, größere Verhältnisse werden bei 9 abgeschnitten. Stetig: jedes Verhältnis, als Gegenprobe zur Skala.")
     question = st.selectbox("Frage an den Entscheider", C.QUESTIONS, key="question_select", format_func=lambda k: C.QUESTION_LABELS[k],

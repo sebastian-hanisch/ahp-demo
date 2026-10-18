@@ -12,10 +12,11 @@ Gewichte w; seine **Paarurteile** sind ein **angenommenes** Modell (lognormales 
 
 ## Warum dieses Problem
 
-**Der Eigenvektor ist nicht das Problem; die Skala, die Frage und das Konsistenzmaß sind es.** Im Urteilsmodell dieser Demo sind Eigenvektor und geometrisches Mittel in Genauigkeit
-und Entscheidung gleichauf (bei 3 Kriterien sogar identisch). Unterschiede liegen woanders: Die Skala 1 bis 9 macht den Fehler rund doppelt so groß wie stetige Urteile; ein
-kleines Konsistenzverhältnis garantiert keine Richtigkeit; und ob AHP bei schmaler Spannweite scheitert, entscheidet die **gestellte Frage** (Wichtigkeit gegen Schwenk), nicht das
-Verfahren. Das einzige, was den Eigenvektor trennt, ist die **Ordnungsstabilität**: Werden alle Urteile verstärkt, kann er ein Paar umkehren, das geometrische Mittel nie.
+**Im Urteilsmodell dieser Demo ist nicht die Ableitung (Eigenvektor oder geometrisches Mittel) das Problem, sondern Skala, Frage und Konsistenzmaß.** Eigenvektor und geometrisches
+Mittel sind in Genauigkeit und Entscheidung gleichauf (bei 3 Kriterien sogar identisch). Unterschiede liegen woanders: Die Skala 1 bis 9 macht den Fehler bei mäßigem Rauschen
+(σ = 0,2) etwa doppelt so groß wie stetige Urteile, bei starkem Rauschen kaum noch; ein kleines Konsistenzverhältnis garantiert keine Richtigkeit; und ob AHP bei schmaler Spannweite
+scheitert, entscheidet in der Welt der Rohwerte die **gestellte Frage** (Wichtigkeit gegen Schwenk), nicht das Verfahren. In Genauigkeit und Trefferquote trennt nichts den Eigenvektor
+vom geometrischen Mittel; der klarste Unterschied ist die **Ordnungsstabilität**: Werden alle Urteile verstärkt, kann der Eigenvektor ein Paar umkehren, das geometrische Mittel nie.
 
 ## Befunde und Korrekturen gegenüber dem Plan
 
@@ -24,11 +25,11 @@ Verfahren. Das einzige, was den Eigenvektor trennt, ist die **Ordnungsstabilitä
   von 0,003 bzw. 1,5 Punkten.
 - **Bei 3 Kriterien gibt es keinen Unterschied.** Eigenvektor und geometrisches Mittel sind dort identisch (größte Abweichung 10⁻¹² über 5 000 Zufallsmatrizen); die
   Voreinstellung der Demo sind deshalb 5 Kriterien.
-- **Ein hohes Konsistenzverhältnis zeigt Fehler an, ein niedriges garantiert keine Richtigkeit.** Bei σ = 0,2 ist der Abstand für CR > 0,1 doppelt so groß wie für CR ≤ 0,1;
-  bei σ = 0,8 sind beide gleich. Eine vollständig konsistente, aber verdichtete Matrix hat CR = 0 und einen Abstand von 0,144.
-- **Der Random Index ist keine Konstante.** Die Demo simuliert ihn (gleichverteilte Skalenwerte); bei 3 Kriterien 0,529 gegen 0,58 in der einen und 0,52 in der anderen Tabelle der
-  Quellen (nach Suchzusammenfassungen, nicht im Original geprüft). Keine Tabelle wird in allen Zeilen innerhalb von zwei Standardfehlern getroffen.
-- **Die Zahlen sind neu gemessen.** Die Phase 0 rechnete mit `numpy.default_rng`; die Demo nutzt den SplitMix64-Strom des Generators. Die Werte verschieben sich um etwa einen
+- **Ein hohes Konsistenzverhältnis zeigt bei kleinem bis mäßigem Rauschen größere Fehler an, ein niedriges garantiert keine Richtigkeit.** Bei σ = 0,2 ist der Abstand für CR > 0,1 doppelt so groß wie für CR ≤ 0,1;
+  bei σ = 0,8 sind beide nahezu gleich (0,117 gegen 0,121). Eine vollständig konsistente, aber verdichtete Matrix hat CR = 0 und einen Abstand von 0,144.
+- **Der Random Index ist keine Konstante.** Die Demo simuliert ihn (gleichverteilte Skalenwerte); bei 3 Kriterien 0,529 ± 0,005 (die Aufzählung aller 4 913 Skalenmatrizen gibt 0,5245) gegen 0,58 in der einen und 0,52 in der anderen Tabelle der
+  Quellen (nach Suchzusammenfassungen, nicht im Original geprüft). Keine Tabelle wird in allen Zeilen innerhalb von zwei Standardfehlern getroffen, die zweite vor allem wegen der Zeilen für 8 und 9 Kriterien.
+- **Die Zahlen sind neu gemessen.** Die Phase 0 rechnete mit `numpy.default_rng`; die Demo nutzt den SplitMix64-Strom des Generators. Die Werte verschieben sich um ein bis zwei
   Standardfehler (Verstärkung γ = 2: 5,4 % statt 4,6 %; Random Index bei 3 Kriterien 0,529 statt 0,520).
 - **Das Preset „Verstärkung kippt den Eigenvektor“ ist ein Zufallsfall,** kein festes Gegenbeispiel: Es ist auf einen Seed abgestimmt, bei dem ein klar geordnetes Paar des
   Eigenvektors umkehrt und das geometrische Mittel dieselbe klare Ordnung behält. Das feste 4 × 4-Gegenbeispiel steht im Experiment 2.
